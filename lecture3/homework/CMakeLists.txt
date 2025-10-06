@@ -5,13 +5,13 @@ project(lecture3_homework)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_BUILD_TYPE Debug)
 message(STATUS "--------------------CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}--------------------")
-
+find_package(PkgConfig REQUIRED)  
+pkg_check_modules(LIBUSB REQUIRED libusb-1.0)  
+include_directories(${LIBUSB_INCLUDE_DIRS})
 find_package(OpenCV REQUIRED)
 find_package(fmt REQUIRED)
 find_package(Eigen3 REQUIRED)
-# find_package(spdlog REQUIRED)
 find_package(yaml-cpp REQUIRED)
-# find_package(nlohmann_json REQUIRED)
 set(OpenVINO_DIR "/opt/intel/openvino_2024.6.0/runtime/cmake/")
 find_package(OpenVINO REQUIRED)
 
@@ -24,7 +24,7 @@ add_subdirectory(tasks)
 add_subdirectory(tools)
 
 add_executable(main main.cpp)
-add_executable(example io/example.cpp)
 
-target_link_libraries(main ${OpenCV_LIBS} fmt::fmt yaml-cpp tools io auto_aim)
-target_link_libraries(example ${OpenCV_LIBS} io)
+
+target_link_libraries(main ${OpenCV_LIBS} ${LIBUSB_LIBRARIES} fmt::fmt yaml-cpp tools io auto_aim)
+

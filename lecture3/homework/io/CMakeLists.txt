@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
-
+include_directories(${EIGEN3_INCLUDE_DIR})
+include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories(${PROJECT_SOURCE_DIR})
 find_package(yaml-cpp REQUIRED)
 
 # 创建目标 io

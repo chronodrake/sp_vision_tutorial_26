@@ -79,7 +79,160 @@ int main()
 
     ret = MV_CC_FreeImageBuffer(handle, &raw);
     if (ret != MV_OK) {
+      return -1;void * handle;
+    int ret;
+    MV_CC_DEVICE_INFO_LIST device_list;
+    ret = MV_CC_EnumDevices(MV_USB_DEVICE, &device_list);
+    if (ret != MV_OK) {
       return -1;
+    }
+  
+    if (device_list.nDeviceNum == 0) {
+      return -1;
+    }
+  
+    ret = MV_CC_CreateHandle(&handle, device_list.pDeviceInfo[0]);
+    if (ret != MV_OK) {
+      return -1;
+    }
+  
+    ret = MV_CC_OpenDevice(handle);
+    if (ret != MV_OK) {
+      return -1;
+    }
+  
+    MV_CC_SetEnumValue(handle, "BalanceWhiteAuto", MV_BALANCEWHITE_AUTO_CONTINUOUS);
+    MV_CC_SetEnumValue(handle, "ExposureAuto", MV_EXPOSURE_AUTO_MODE_OFF);
+    MV_CC_SetEnumValue(handle, "GainAuto", MV_GAIN_MODE_OFF);
+    MV_CC_SetFloatValue(handle, "ExposureTime", 10000);
+    MV_CC_SetFloatValue(handle, "Gain", 20);
+    MV_CC_SetFrameRate(handle, 60);
+   
+    // 读取一帧图像
+    ret = MV_CC_StartGrabbing(handle);
+    if (ret != MV_OK) {
+      return -1;
+    }
+  
+    MV_FRAME_OUT raw;
+    unsigned int nMsec = 100;
+
+    ret = MV_CC_GetImageBuffer(handle, &raw, nMsec);
+    if (ret != MV_OK) {
+      return -1;
+    }
+
+    cv::Mat img = transfer(raw);
+    cv::imshow("img", img);
+    cv::waitKey(0);
+
+    ret = MV_CC_FreeImageBuffer(handle, &raw);
+    if (ret != MV_OK) {
+      return -1;
+    }void * handle;
+    int ret;
+    MV_CC_DEVICE_INFO_LIST device_list;
+    ret = MV_CC_EnumDevices(MV_USB_DEVICE, &device_list);
+    if (ret != MV_OK) {
+      return -1;
+    }
+  
+    if (device_list.nDeviceNum == 0) {
+      return -1;
+    }
+  
+    ret = MV_CC_CreateHandle(&handle, device_list.pDeviceInfo[0]);
+    if (ret != MV_OK) {
+      return -1;
+    }
+  
+    ret = MV_CC_OpenDevice(handle);
+    if (ret != MV_OK) {
+      return -1;
+    }
+  
+    MV_CC_SetEnumValue(handle, "BalanceWhiteAuto", MV_BALANCEWHITE_AUTO_CONTINUOUS);
+    MV_CC_SetEnumValue(handle, "ExposureAuto", MV_EXPOSURE_AUTO_MODE_OFF);
+    MV_CC_SetEnumValue(handle, "GainAuto", MV_GAIN_MODE_OFF);
+    MV_CC_SetFloatValue(handle, "ExposureTime", 10000);
+    MV_CC_SetFloatValue(handle, "Gain", 20);
+    MV_CC_SetFrameRate(handle, 60);
+   
+    // 读取一帧图像
+    ret = MV_CC_StartGrabbing(handle);
+    if (ret != MV_OK) {
+      return -1;
+    }
+  
+    MV_FRAME_OUT raw;
+    unsigned int nMsec = 100;
+
+    ret = MV_CC_GetImageBuffer(handle, &raw, nMsec);
+    if (ret != MV_OK) {
+      return -1;
+    }
+void * handle;
+    int ret;
+    MV_CC_DEVICE_INFO_LIST device_list;
+    ret = MV_CC_EnumDevices(MV_USB_DEVICE, &device_list);
+    if (ret != MV_OK) {
+      return -1;
+    }
+  
+    if (device_list.nDeviceNum == 0) {
+      return -1;
+    }
+  
+    ret = MV_CC_CreateHandle(&handle, device_list.pDeviceInfo[0]);
+    if (ret != MV_OK) {
+      return -1;
+    }
+  
+    ret = MV_CC_OpenDevice(handle);
+    if (ret != MV_OK) {
+      return -1;
+    }
+  
+    MV_CC_SetEnumValue(handle, "BalanceWhiteAuto", MV_BALANCEWHITE_AUTO_CONTINUOUS);
+    MV_CC_SetEnumValue(handle, "ExposureAuto", MV_EXPOSURE_AUTO_MODE_OFF);
+    MV_CC_SetEnumValue(handle, "GainAuto", MV_GAIN_MODE_OFF);
+    MV_CC_SetFloatValue(handle, "ExposureTime", 10000);
+    MV_CC_SetFloatValue(handle, "Gain", 20);
+    MV_CC_SetFrameRate(handle, 60);
+   
+    // 读取一帧图像
+    ret = MV_CC_StartGrabbing(handle);
+    if (ret != MV_OK) {
+      return -1;
+    }
+  
+    MV_FRAME_OUT raw;
+    unsigned int nMsec = 100;
+
+    ret = MV_CC_GetImageBuffer(handle, &raw, nMsec);
+    if (ret != MV_OK) {
+      return -1;
+    }
+
+    cv::Mat img = transfer(raw);
+    cv::imshow("img", img);
+    cv::waitKey(0);
+
+    ret = MV_CC_FreeImageBuffer(handle, &raw);
+    if (ret != MV_OK) {
+      return -1;
+    }
+    
+    cv::Mat img = transfer(raw);
+    cv::imshow("img", img);
+    cv::waitKey(0);
+
+    ret = MV_CC_FreeImageBuffer(handle, &raw);
+    if (ret != MV_OK) {
+      return -1;
+    }
+    
+    
     }
     
     // 关闭相机
